@@ -12,9 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tontines', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string('name');
+            $table->integer('profit');
+            $table->integer('delay');
+            $table->integer('amount');
+            $table->integer('number_of_members');
+            $table->text('description');
+            $table->enum('status', ['Creating', 'Ongoing', 'Suspended', 'Completed'])->default('Creating');
             $table->timestamps();
-        });
+            $table->timestamp('suspension_date')->nullable();
+            $table->text('suspension_reason')->nullable();
+            $table->softDeletes();
+            $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnDelete()->cascadeOnUpdate();
+});
     }
 
     /**

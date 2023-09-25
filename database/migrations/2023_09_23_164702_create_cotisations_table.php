@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cotisations', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('participation_id')->constrained();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('participation_id')->constrained();
             $table->timestamps();
         });
     }
