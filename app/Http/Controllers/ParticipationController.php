@@ -12,7 +12,9 @@ class ParticipationController extends Controller
      */
     public function index()
     {
-        //
+        $participations = Participation::orderBy('created_at', 'desc');
+
+        return view('', compact('participations'));
     }
 
     /**
@@ -20,7 +22,7 @@ class ParticipationController extends Controller
      */
     public function create()
     {
-        //
+        return view('');
     }
 
     /**
@@ -28,7 +30,9 @@ class ParticipationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Participation::create($request->all());
+
+        return to_route('');
     }
 
     /**
@@ -36,7 +40,7 @@ class ParticipationController extends Controller
      */
     public function show(Participation $participation)
     {
-        //
+        return view('', compact('participation'));
     }
 
     /**
@@ -44,7 +48,7 @@ class ParticipationController extends Controller
      */
     public function edit(Participation $participation)
     {
-        //
+        return view('', compact('participation'));
     }
 
     /**
@@ -52,7 +56,9 @@ class ParticipationController extends Controller
      */
     public function update(Request $request, Participation $participation)
     {
-        //
+        $participation->update($request->all());
+
+        return to_route('');
     }
 
     /**
@@ -60,6 +66,8 @@ class ParticipationController extends Controller
      */
     public function destroy(Participation $participation)
     {
-        //
+        $participation->delete();
+
+        return to_route('');
     }
 }

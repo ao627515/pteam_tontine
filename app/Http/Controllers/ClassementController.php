@@ -12,7 +12,9 @@ class ClassementController extends Controller
      */
     public function index()
     {
-        //
+        $classements = Classement::orderBy('created_at', 'desc')->get();
+
+        return view('', compact('classements'));
     }
 
     /**
@@ -20,7 +22,7 @@ class ClassementController extends Controller
      */
     public function create()
     {
-        //
+        return  view('');
     }
 
     /**
@@ -28,7 +30,7 @@ class ClassementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

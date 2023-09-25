@@ -12,7 +12,9 @@ class CotisationController extends Controller
      */
     public function index()
     {
-        //
+        $cotisation = Cotisation::orderBy('created_at', 'desc');
+
+        return view('', compact('cotisation'));
     }
 
     /**
@@ -20,7 +22,7 @@ class CotisationController extends Controller
      */
     public function create()
     {
-        //
+        return view('');
     }
 
     /**
@@ -28,7 +30,9 @@ class CotisationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Cotisation::create($request->all());
+
+        return to_route('');
     }
 
     /**
@@ -36,7 +40,7 @@ class CotisationController extends Controller
      */
     public function show(Cotisation $cotisation)
     {
-        //
+        return view('', compact('cotisation'));
     }
 
     /**
@@ -44,7 +48,7 @@ class CotisationController extends Controller
      */
     public function edit(Cotisation $cotisation)
     {
-        //
+        return view('', compact('cotisation'));
     }
 
     /**
@@ -52,7 +56,9 @@ class CotisationController extends Controller
      */
     public function update(Request $request, Cotisation $cotisation)
     {
-        //
+        $cotisation->update($request->all());
+
+        return to_route('');
     }
 
     /**
@@ -60,6 +66,8 @@ class CotisationController extends Controller
      */
     public function destroy(Cotisation $cotisation)
     {
-        //
+        $cotisation->delete();
+
+        return to_route('');
     }
 }

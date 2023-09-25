@@ -12,7 +12,9 @@ class TontineController extends Controller
      */
     public function index()
     {
-        //
+        $tontines = Tontine::orderBy('created_at', 'desc')->get();
+
+        return view('', compact('tontines'));
     }
 
     /**
@@ -20,7 +22,7 @@ class TontineController extends Controller
      */
     public function create()
     {
-        //
+        return view('');
     }
 
     /**
@@ -28,7 +30,9 @@ class TontineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Tontine::create($request->all());
+
+        return to_route('');
     }
 
     /**
@@ -36,7 +40,7 @@ class TontineController extends Controller
      */
     public function show(Tontine $tontine)
     {
-        //
+        return view('', compact('tontine'));
     }
 
     /**
@@ -44,7 +48,7 @@ class TontineController extends Controller
      */
     public function edit(Tontine $tontine)
     {
-        //
+        return view('');
     }
 
     /**
@@ -52,7 +56,9 @@ class TontineController extends Controller
      */
     public function update(Request $request, Tontine $tontine)
     {
-        //
+        $tontine->update($request->all());
+
+        return to_route('');
     }
 
     /**
@@ -60,6 +66,8 @@ class TontineController extends Controller
      */
     public function destroy(Tontine $tontine)
     {
-        //
+        $tontine->delete();
+
+        return to_route('');
     }
 }
