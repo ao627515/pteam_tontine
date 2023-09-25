@@ -8,7 +8,7 @@
         <div class="col">
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>0</h3>
 
                     <p>New Orders</p>
                 </div>
