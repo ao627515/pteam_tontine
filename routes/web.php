@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\ClassementController;
+use App\Http\Controllers\CotisationController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ParticipationController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\TontineController;
+use App\Http\Controllers\UserController;
 use App\Models\Tontine;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +25,14 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
-route::resource('tontine',TontineController::class);
+route::resource([
+    'user'=>UserController::class,
+    'cotisation'=>CotisationController::class,
+    'dashboard'=>DashboardController::class,
+    'participation'=>ParticipationController::class,
+    'tontine'=>TontineController::class,
+    'classement'=>ClassementController::class,
+]);
 
 Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
 
