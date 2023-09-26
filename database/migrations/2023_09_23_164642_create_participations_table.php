@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignUuid('user_id')->constrained();
             $table->foreignUuid('tontine_id')->constrained();
             $table->integer('nombre_bras');
+            $table->integer('rank');
+            $table->timestamps();
         });
     }
 

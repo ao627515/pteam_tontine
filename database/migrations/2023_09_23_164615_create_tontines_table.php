@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->integer('profit');
             $table->integer('delay');
+            $table->enum('periode', ['day', 'week', 'month', 'year']);
             $table->integer('amount');
             $table->integer('number_of_members');
             $table->text('description');
-            $table->enum('status', ['Creating', 'Ongoing', 'Suspended', 'Completed'])->default('Creating');
+            $table->string('status');
             $table->timestamps();
             $table->timestamp('suspension_date')->nullable();
             $table->text('suspension_reason')->nullable();

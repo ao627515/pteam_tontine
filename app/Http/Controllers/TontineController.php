@@ -14,7 +14,7 @@ class TontineController extends Controller
     {
         $tontines = Tontine::orderBy('created_at', 'desc')->get();
 
-        return view('', compact('tontines'));
+        return view('tontine', compact('tontines'));
     }
 
     /**
