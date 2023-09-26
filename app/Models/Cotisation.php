@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Participation;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Cotisation extends Model
 {
@@ -13,6 +14,6 @@ class Cotisation extends Model
 
 
     public function participation(){
-        return$this->belongsTo(participation::class);
+        return$this->belongsTo(Participation::class);
     }
 }

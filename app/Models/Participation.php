@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\User;
+use App\Models\Tontine;
+use App\Models\Cotisation;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Participation extends Model
 {
@@ -13,14 +16,14 @@ class Participation extends Model
 
 
     public function Cotisation(){
-        return$this->hasMany(Cotisation::class);
+        return $this->hasMany(Cotisation::class);
     }
 
     public function user(){
-        return$this->belongsTo(user::class);
+        return $this->belongsTo(User::class);
     }
 
     public function tontine(){
-        return$this->belongsTo(tontine::class);
+        return $this->belongsTo(Tontine::class);
     }
 }

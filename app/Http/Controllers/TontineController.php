@@ -40,6 +40,7 @@ class TontineController extends Controller
      */
     public function show(Tontine $tontine)
     {
+        
         return view('tontine.detail', compact('tontine'));
     }
 
