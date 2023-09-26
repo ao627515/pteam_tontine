@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('cotisations', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('participation_id')->constrained();
+            $table->string('periode')->nullable();
             $table->timestamps();
         });
     }

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('classements', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->integer('rang');
             $table->integer('montant_pris');
             $table->foreignUuid('participation_id')->constrained();
             $table->timestamps();
