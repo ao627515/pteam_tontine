@@ -32,7 +32,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                        Followers <span class="float-right badge bg-danger">842</span>
+                        Adhérants <span class="float-right badge bg-danger">1/10</span>
                         </a>
                     </li>
                     </ul>
