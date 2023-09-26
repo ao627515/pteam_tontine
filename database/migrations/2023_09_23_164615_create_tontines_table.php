@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('amount');
             $table->integer('number_of_members');
             $table->text('description');
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->timestamps();
             $table->timestamp('suspension_date')->nullable();
             $table->text('suspension_reason')->nullable();
