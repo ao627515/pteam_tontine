@@ -12,9 +12,9 @@ class CotisationController extends Controller
      */
     public function index()
     {
-        $cotisation = Cotisation::orderBy('created_at', 'desc');
+        $cotisations = Cotisation::orderBy('created_at', 'desc');
 
-        return view('', compact('cotisation'));
+        return view('', compact('cotisations'));
     }
 
     /**
