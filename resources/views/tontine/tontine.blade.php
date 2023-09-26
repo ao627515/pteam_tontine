@@ -1,11 +1,30 @@
 @extends('layout')
-@section('title', 'Tontine')
-@section('content')
+{{-- @section('title', 'Tontine') --}}
 
+@section('css')
+      <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+@endsection
+
+
+@section('content')
 <div class="container">   
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
-        Ajouter une tontine
-      </button>
+<div class="row">
+    <div class="col-md-6" ><h2>tontine</h2>
+        
+    </div> 
+       <div class="col-sm-6 col-md-4 text-right">
+        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
+            Ajouter un nouveau
+          </button>
+    </div>
+
+</div>
+    {{-- @if (session('success'))
+        <div class="alert alert-success">{{session('success')}}</div>
+    @endif --}}
+    
+
     <div class="row">
         @foreach ($tontines as $tontine )
         <div class="col-lg-3 col-md-4 col-sm-6 col-12">
@@ -32,4 +51,26 @@
  
     </div>
 
+@endsection
+
+
+@section('script')
+<!-- SweetAlert2 -->
+<script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+    <script>
+        $(function () {
+            var Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+    @if (session('success'))
+    Toast.fire({
+        icon: 'success',
+        title: {{session('success')}}
+      })
+    @endif
+        });
+    </script>
 @endsection

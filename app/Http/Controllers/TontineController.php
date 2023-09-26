@@ -37,7 +37,7 @@ class TontineController extends Controller
             'user_id' => auth()->user()->id,
         ]));
 
-        return to_route('tontine.index')->with('succes', 'Tontine créée !');
+        return to_route('tontine.index')->with('success', 'Tontine créée !');
     }
 
     /**
@@ -74,6 +74,6 @@ class TontineController extends Controller
     {
         $tontine->delete();
 
-        return to_route('');
+        return to_route('tontine.index');
     }
 }
