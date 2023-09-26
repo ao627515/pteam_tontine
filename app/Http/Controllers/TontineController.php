@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tontine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TontineController extends Controller
 {
@@ -12,7 +13,9 @@ class TontineController extends Controller
      */
     public function index()
     {
-        $tontines = Tontine::orderBy('created_at', 'desc')->get();
+        $tontines = Tontine::where('user_id',Auth::user()->id)
+                            ->orderBy('created_at', 'desc')
+                            ->get();
 
         return view('tontine.tontine', compact('tontines'));
     }
