@@ -21,22 +21,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
+Route::middleware(['guest'])->group(function(){
+
+    Route::get('/', function () {
+        return to_route('login');
+    });
+
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
 });
 
-route::resource([
-    'user'=>UserController::class,
-    'cotisation'=>CotisationController::class,
-    'dashboard'=>DashboardController::class,
-    'participation'=>ParticipationController::class,
-    'tontine'=>TontineController::class,
-    'classement'=>ClassementController::class,
-]);
 
-Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::middleware(['auth'])->prefix('/')->group(function(){
 
-Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    route::resources([
+        'user'=>UserController::class,
+        'cotisation'=>CotisationController::class,
+        'dashboard'=>DashboardController::class,
+        'participation'=>ParticipationController::class,
+        'tontine'=>TontineController::class,
+        'classement'=>ClassementController::class,
+    ]);
 
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+});
 
