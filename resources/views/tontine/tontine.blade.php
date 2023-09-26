@@ -2,7 +2,10 @@
 @section('title', 'Tontine')
 @section('content')
 
-<div class="container">
+<div class="container">   
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
+        Ajouter une tontine
+      </button>
     <div class="row">
         @foreach ($tontines as $tontine )
         <div class="col-lg-3 col-md-4 col-sm-6 col-12">
@@ -23,6 +26,10 @@
         </div>
     @endforeach
     </div>
-</div>
+
+    @include('tontine.create')
+
+ 
+    </div>
 
 @endsection
