@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\TontineController;
 use App\Models\Tontine;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,9 @@ Route::get('/', function () {
 
 route::resource('tontine',TontineController::class);
 
-Route::get('detail', function () {
-    return view('detail');
-})->name('detail.tontine');
+Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+
+Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
