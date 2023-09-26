@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TontineController;
+use App\Models\Tontine;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +19,8 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
-Route::get('/tontine', function () {
-    return view('tontine');
-});
+route::resource('tontine',TontineController::class);
+
 Route::get('detail', function () {
     return view('detail');
 })->name('detail.tontine');
