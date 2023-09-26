@@ -33,7 +33,7 @@ Route::middleware(['guest'])->group(function(){
 });
 
 
-Route::middleware(['auth'])->prefix('/')->group(function(){
+// Route::group(function(){
 
     route::resources([
         'user'=>UserController::class,
@@ -44,6 +44,6 @@ Route::middleware(['auth'])->prefix('/')->group(function(){
         'classement'=>ClassementController::class,
     ]);
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-});
+//     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+// });
 
