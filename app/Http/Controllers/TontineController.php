@@ -14,7 +14,7 @@ class TontineController extends Controller
     {
         $tontines = Tontine::orderBy('created_at', 'desc')->get();
 
-        return view('tontine', compact('tontines'));
+        return view('tontine.tontine', compact('tontines'));
     }
 
     /**
@@ -22,7 +22,7 @@ class TontineController extends Controller
      */
     public function create()
     {
-        return view('');
+        return view('tontine.create');
     }
 
     /**
@@ -40,7 +40,7 @@ class TontineController extends Controller
      */
     public function show(Tontine $tontine)
     {
-        return view('', compact('tontine'));
+        return view('tontine.detail', compact('tontine'));
     }
 
     /**
