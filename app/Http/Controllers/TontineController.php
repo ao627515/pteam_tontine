@@ -33,9 +33,11 @@ class TontineController extends Controller
      */
     public function store(Request $request)
     {
-        Tontine::create($request->all());
+        Tontine::create(array_merge($request->all(), [
+            'user_id' => auth()->user()->id,
+        ]));
 
-        return to_route('');
+        return to_route('tontine.index')->with('succes', 'Tontine créée !');
     }
 
     /**
@@ -43,7 +45,7 @@ class TontineController extends Controller
      */
     public function show(Tontine $tontine)
     {
-        
+
         return view('tontine.detail', compact('tontine'));
     }
 
