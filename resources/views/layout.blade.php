@@ -57,7 +57,8 @@
                         <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#"
+                            class="d-block">{{ auth()->user()->last_name . ' ' . auth()->user()->first_name }}</a>
                     </div>
                 </div>
 
@@ -76,14 +77,21 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('tontine.index')}}" class="nav-link">
+                            <a href="{{ route('tontine.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Tontine
                                 </p>
                             </a>
                         </li>
-
+                        <li class="nav-header">DECONNEXION</li>
+                        <li class="nav-item ">
+                            <form action="{{ route('logout') }}" method="POST" class="nav-link" id="logout">
+                                @csrf
+                                <i class="fa-solid fa-power-off nav-icon" style="color: #ff0000;"></i>
+                                <p class="text-light">Déconnexion</p>
+                            </form>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -134,7 +142,14 @@
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-
+    <script>
+        $(document).ready(function() {
+            $('#logout').click(function() {
+                // Soumet le formulaire de déconnexion
+                $('#logout').submit();
+            });
+        });
+    </script>
     @yield('script')
 </body>
 
