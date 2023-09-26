@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Tontine;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
@@ -46,7 +48,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'organizer',
             'password' => Hash::make('1234'),
         ]);
-        
+
         User::factory()->create([
             'id' => Str::uuid(),
             'last_name' => 'Ouédraogo',
@@ -75,6 +77,17 @@ class DatabaseSeeder extends Seeder
             'role' => 'organizer',
             'password' => Hash::make('12345678'),
         ]);
+
+        $users = User::all();
+
+        for ($i = 1; $i <= 10; $i++){
+            foreach ($users as $user) {
+                Tontine::factory()->create([
+                    'user_id' => $user->id,
+                    'name' => 'Tonine '.$i
+                ]);
+            }
+        }
 
     }
 }
