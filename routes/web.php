@@ -33,7 +33,7 @@ Route::middleware(['guest'])->group(function(){
 });
 
 
-Route::middleware(['auth'])->prefix('/')->group(function(){
+Route::middleware(['auth'])->group(function(){
 
     route::resources([
         'user'=>UserController::class,
