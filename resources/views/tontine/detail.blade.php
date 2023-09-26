@@ -2,6 +2,16 @@
 @section('title', 'Tontine')
 @section('content')
     <div class="container">
+
+      @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{$error}}</li>
+            @endforeach
+          </ul>
+      </div>
+      @endif
         <!-- Widget: user widget style 2 -->
         <div class="row">
             <div class="col-12">
@@ -141,17 +151,17 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Téléphone</label>
-                                    <input type="email" name="phone_number" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Enter email">
+                                    <input type="number" name="phone_number" class="form-control" id="exampleInputEmail1"
+                                        placeholder="Enter le tel">
                                 </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
+                        <div class="modal-footer justify-content-between">
+                            <button type="reset" class="btn btn-default">Annuler</button>
+                            <button type="submit" class="btn btn-success">Enregistré</button>
+                        </div>
                     </form>
-                    <div class="modal-footer justify-content-between">
-                        <button type="reset" class="btn btn-default">Annuler</button>
-                        <button type="button" class="btn btn-success">Enregistré</button>
-                    </div>
                 </div>
                 <!-- /.modal-content -->
             </div>

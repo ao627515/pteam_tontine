@@ -24,10 +24,10 @@ class StoreUserRequest extends FormRequest
         return [
             'last_name' => ['required', 'string', 'min:2', 'max:245'],
             'first_name' => ['required', 'string', 'min:2', 'max:245'],
-            'identity_document_front' => ['nullable', 'image', 'min:2000'],
-            'identity_document_back' => ['nullable', 'image', 'min:2000'],
+            'identity_document_front' => ['nullable', 'image', 'max:2000'],
+            'identity_document_back' => ['nullable', 'image', 'max:2000'],
             'phone_number' => ['required', 'integer', 'min:8'],
-            'username' => ['nullable', 'string', 'unique:user,userame'],
+            'username' => ['nullable', 'string', 'unique:users,username'],
             'role' => ['nullable', 'in:participant,organizer,administrator'],
             'password' => ['nullable', 'string',]
         ];
