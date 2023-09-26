@@ -14,6 +14,6 @@ class Cotisation extends Model
 
 
     public function participation(){
-        return$this->belongsTo(Participation::class);
+        return $this->belongsTo(Participation::class);
     }
 }

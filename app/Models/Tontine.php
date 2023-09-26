@@ -14,7 +14,7 @@ class Tontine extends Model
     protected $guarded = [''];
 
     public function participation(){
-        return$this->belongsTo(Participation::class);
+        return $this->hasMany(Participation::class);
     }
 
 }
