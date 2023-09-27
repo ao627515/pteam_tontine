@@ -1,17 +1,20 @@
 @extends('layout')
 @section('title', 'Tontine')
+@section('css')
+    <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
+@endsection
 @section('content')
     <div class="container">
-
-      @if ($errors->any())
-      <div class="alert alert-danger">
-          <ul>
-            @foreach ($errors->all() as $error)
-              <li>{{$error}}</li>
-            @endforeach
-          </ul>
-      </div>
-      @endif
+         <!-- Vérifiez s'il y a un message SweetAlert dans la session -->
+         {{-- @if(session('sweet_alert'))
+         <script>
+             Swal.fire({
+                 icon: '{{ session('sweet_alert.icon') }}',
+                 title: '{{ session('sweet_alert.title') }}',
+                 text: '{{ session('sweet_alert.text') }}',
+             });
+         </script>
+        @endif --}}
         <!-- Widget: user widget style 2 -->
         <div class="row">
             <div class="col-12">
@@ -169,8 +172,6 @@
         </div>
         <!-- /.modal -->
     @endsection
-    <script>
-        $(function() {
-            bsCustomFileInput.init();
-        });
-    </script>
+    @section('script')
+        <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
+    @endsection
