@@ -1,87 +1,76 @@
 @extends('layout')
+
 @section('title', 'Tontine')
-@section('css')
-    <link rel="stylesheet" href="../plugins/sweetalert2/sweetalert2.min.css">
-@endsection
+
 @section('content')
     <div class="container">
-         <!-- Vérifiez s'il y a un message SweetAlert dans la session -->
-         @if(session('sweet_alert'))
-         <script>
-             Swal.fire({
-                 icon: '{{ session('sweet_alert.icon') }}',
-                 title: '{{ session('sweet_alert.title') }}',
-                 text: '{{ session('sweet_alert.text') }}',
-             });
-         </script>
-        @endif
         <!-- Widget: user widget style 2 -->
         <div class="row">
             <div class="col">
                 <div class="widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header bg-secondary">
-                          <h2 class="widget-user-username">{{ $tontine->name }}</h2>
-                          <h5 class="widget-user-desc">Créé le {{ $tontine->created_at }}</h5>
-                          <button class="text-danger">Status : Non Démarré</button>
-                      </div>
-                  </div>                  
-                    <div class="card-footer p-0">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a href="" class="nav-link text-secondary">
-                                    Participants <span
-                                        class="float-right badge bg-primary">{{ $tontine->number_of_members }}</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link text-secondary">
-                                    Cotisation <span class="float-right badge bg-info">{{ $tontine->amount }} FCFA</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link text-secondary">
-                                    Bénéfice <span class="float-right badge bg-success"> {{ $tontine->profit }} FCFA</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link text-secondary">
-                                    Adhérants <span
-                                        class="float-right badge bg-danger">{{ $tontine->participation->count() }}/{{ $tontine->number_of_members }}</span>
-                                </a>
-                            </li>
-                        </ul>
+                        <h2 class="widget-user-username">{{ $tontine->name }}</h2>
+                        <h5 class="widget-user-desc">Créé le {{ $tontine->created_at }}</h5>
+                        <button class="text-danger">Status : Non Démarré</button>
                     </div>
+                </div>
+                <div class="card-footer p-0">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a href="" class="nav-link text-secondary">
+                                Participants <span
+                                    class="float-right badge bg-primary">{{ $tontine->number_of_members }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link text-secondary">
+                                Cotisation <span class="float-right badge bg-info">{{ $tontine->amount }} FCFA</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link text-secondary">
+                                Bénéfice <span class="float-right badge bg-success"> {{ $tontine->profit }} FCFA</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link text-secondary">
+                                Adhérants <span
+                                    class="float-right badge bg-danger">{{ $tontine->participation->count() }}/{{ $tontine->number_of_members }}</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <!-- /.widget-user -->
-        <section class="content-header">
-            <div class="container-fluid my-2">
-                <div class="row justify-content-center align-items-center d-flex">
-                    <div class="col-sm-12 col-md-12 col-lg-7">
-                        <h1>Liste des Participants</h1>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-5 text-end mt-2">
-                        @if ($tontine->participation->count() < $tontine->number_of_members)
-                            <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#modal-default">
-                                Ajouter un nouveau
-                            </button>
-                        @else
-                            <button type="submit" class="btn btn-danger">
-                                Lancer la tontine
-                            </button>
-                        @endif
-                    </div>
+    </div>
+    <!-- /.widget-user -->
+    <section class="content-header">
+        <div class="container-fluid my-2">
+            <div class="row justify-content-center align-items-center d-flex">
+                <div class="col-sm-12 col-md-12 col-lg-7">
+                    <h1>Liste des Participants</h1>
                 </div>
-            </div>            
-            <!-- /.container-fluid -->
-        </section>
-        <div class="row">
-            <div class="col-12">
-                <div class="card-body">
-                    <table id="example1" class="table table-bordered">
-                        @forelse ($tontine->participation as $participation)
+                <div class="col-sm-12 col-md-12 col-lg-5 text-end mt-2">
+                    @if ($tontine->participation->count() < $tontine->number_of_members)
+                        <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#modal-default">
+                            Ajouter un nouveau
+                        </button>
+                    @else
+                        <button type="submit" class="btn btn-danger">
+                            Lancer la tontine
+                        </button>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <div class="row">
+        <div class="col-12">
+            <div class="card-body">
+                <table id="example1" class="table table-bordered">
+                    @forelse ($tontine->participation as $participation)
                         <thead>
                             <tr>
                                 <th>Nom (s)</th>
@@ -92,23 +81,25 @@
                         </thead>
                         <tbody>
                             {{-- {{dd($tontine,$tontine->participation,$tontine->number_of_members)}} --}}
-                                <tr>
-                                    <td><a href="#">{{ $participation->user->last_name . ' ' . $participation->user->first_name }}</a></td>
-                                    <td><a href="#">{{ $participation->nombre_bras }}</a></td>
-                                    <td> {{ $participation->rank}} </td>
-                                    <td>{{ $tontine->participation->count() }}/{{ $tontine->number_of_members }}</td>
-                                </tr>
-                                @empty
-                                <b class="text-warning">Aucun participant n'a été ajouté </b>
-                            @endforelse
-                        </table>
-                    </tbody>
-                </div>
-                <!-- /.card-body -->
+                            <tr>
+                                <td><a
+                                        href="#">{{ $participation->user->last_name . ' ' . $participation->user->first_name }}</a>
+                                </td>
+                                <td><a href="#">{{ $participation->nombre_bras }}</a></td>
+                                <td> {{ $participation->rank }} </td>
+                                <td>{{ $tontine->participation->count() }}/{{ $tontine->number_of_members }}</td>
+                            </tr>
+                        @empty
+                            <b class="text-warning">Aucun participant n'a été ajouté </b>
+                    @endforelse
+                </table>
+                </tbody>
             </div>
-            <!-- /.col -->
+            <!-- /.card-body -->
         </div>
-        <!-- /.row -->
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
     </div>
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog">
@@ -120,8 +111,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" enctype="multipart/form-data" action="{{route('user.store')}}">
-                      @csrf
+                    <form method="POST" enctype="multipart/form-data" action="{{ route('user.store') }}">
+                        @csrf
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -174,5 +165,14 @@
         <!-- /.modal -->
     @endsection
     @section('script')
-        <script src="../plugins/sweetalert2/sweetalert2.min.js"></script>
+        <!-- Vérifiez s'il y a un message SweetAlert dans la session -->
+        @if (session('sweet_alert'))
+            <script>
+                Swal.fire({
+                    icon: '{{ session('sweet_alert.icon') }}',
+                    title: '{{ session('sweet_alert.title') }}',
+                    text: '{{ session('sweet_alert.text') }}',
+                });
+            </script>
+        @endif
     @endsection
