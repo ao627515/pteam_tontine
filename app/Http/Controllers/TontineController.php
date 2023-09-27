@@ -36,7 +36,9 @@ class TontineController extends Controller
             'user_id' => auth()->user()->id,
             'status' => 'inactif',
         ]));
+
         sweetalert()->addSuccess('Une tontine a été créée !');
+        
         return to_route('tontine.index');
     }
 
@@ -76,5 +78,5 @@ class TontineController extends Controller
 
         return to_route('tontine.index');
     }
-    
+
 }
