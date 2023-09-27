@@ -6,7 +6,7 @@
 @section('content')
     <div class="container">
          <!-- Vérifiez s'il y a un message SweetAlert dans la session -->
-         {{-- @if(session('sweet_alert'))
+         @if(session('sweet_alert'))
          <script>
              Swal.fire({
                  icon: '{{ session('sweet_alert.icon') }}',
@@ -14,21 +14,16 @@
                  text: '{{ session('sweet_alert.text') }}',
              });
          </script>
-        @endif --}}
+        @endif
         <!-- Widget: user widget style 2 -->
         <div class="row">
-            <div class="col-12">
+            <div class="col">
                 <div class="widget-user">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
-                    <div class="widget-user-header bg-secondary d-flex justify-content-between align-items-center">
-                      <!-- Left Side: User Information -->
-                      <div class="text-start">
+                    <div class="widget-user-header bg-secondary">
                           <h2 class="widget-user-username">{{ $tontine->name }}</h2>
                           <h5 class="widget-user-desc">Créé le {{ $tontine->created_at }}</h5>
-                      </div>                 
-                      <!-- Right Side: Tontine Status -->
-                      <div class="text-end mt-3">
-                          <p class="bg-warning p-2 ">En cours</p>
+                          <button class="text-danger">Status : Non Démarré</button>
                       </div>
                   </div>                  
                     <div class="card-footer p-0">
@@ -63,25 +58,30 @@
         <!-- /.widget-user -->
         <section class="content-header">
             <div class="container-fluid my-2">
-                <div class="row mb-2">
-                    <div class="col-sm-6 col-md-8">
+                <div class="row justify-content-center align-items-center d-flex">
+                    <div class="col-sm-12 col-md-12 col-lg-7">
                         <h1>Liste des Participants</h1>
                     </div>
-                    <div class="col-sm-6 col-md-4 text-right">
+                    <div class="col-sm-12 col-md-12 col-lg-5 text-end mt-2">
                         @if ($tontine->participation->count() < $tontine->number_of_members)
                             <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#modal-default">
                                 Ajouter un nouveau
                             </button>
+                        @else
+                            <button type="submit" class="btn btn-danger">
+                                Lancer la tontine
+                            </button>
                         @endif
                     </div>
                 </div>
-            </div>
+            </div>            
             <!-- /.container-fluid -->
         </section>
         <div class="row">
             <div class="col-12">
                 <div class="card-body">
                     <table id="example1" class="table table-bordered">
+                        @forelse ($tontine->participation as $participation)
                         <thead>
                             <tr>
                                 <th>Nom (s)</th>
@@ -92,16 +92,17 @@
                         </thead>
                         <tbody>
                             {{-- {{dd($tontine,$tontine->participation,$tontine->number_of_members)}} --}}
-                            @foreach ($tontine->participation as $participation)
                                 <tr>
-                                    <td>{{ $participation->user->last_name . ' ' . $participation->user->first_name }}</td>
+                                    <td><a href="#">{{ $participation->user->last_name . ' ' . $participation->user->first_name }}</a></td>
+                                    <td><a href="#">{{ $participation->nombre_bras }}</a></td>
+                                    <td> {{ $participation->rank}} </td>
                                     <td>{{ $tontine->participation->count() }}/{{ $tontine->number_of_members }}</td>
-                                    <td>1</td>
-                                    <td>5/10</td>
                                 </tr>
-                            @endforeach
-                            </tfoot>
-                    </table>
+                                @empty
+                                <b class="text-warning">Aucun participant n'a été ajouté </b>
+                            @endforelse
+                        </table>
+                    </tbody>
                 </div>
                 <!-- /.card-body -->
             </div>

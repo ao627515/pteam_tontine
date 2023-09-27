@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Tontine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
 class TontineController extends Controller
 {
     /**
@@ -35,9 +34,10 @@ class TontineController extends Controller
     {
         Tontine::create(array_merge($request->all(), [
             'user_id' => auth()->user()->id,
+            'status' => 'inactif',
         ]));
-
-        return to_route('tontine.index')->with('success', 'Tontine créée !');
+        sweetalert()->addSuccess('Une tontine a été créée !');
+        return to_route('tontine.index');
     }
 
     /**
@@ -76,4 +76,5 @@ class TontineController extends Controller
 
         return to_route('tontine.index');
     }
+    
 }

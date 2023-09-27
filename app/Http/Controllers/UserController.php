@@ -12,8 +12,8 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
+    {   $users = User::orderBy('created_at', 'desc');
+        return view('user.index', compact('users'));
     }
 
     /**
@@ -58,8 +58,8 @@ class UserController extends Controller
                     'identity_document_front' => $identity_document_front_path,
                     'identity_document_back' => $identity_document_back_path,
                 ]);
-
-                return back()->with('succes', 'Nouveau participant créé !');
+                sweetalert()->addSuccess('Nouveau participant créé !');
+                return redirect()->back();
             }
         }
     }
