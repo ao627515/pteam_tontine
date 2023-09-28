@@ -50,4 +50,7 @@ Route::middleware(['auth'])->group(function(){
 
     // Commencé une tontine
     Route::post('tontine/{tontine}/start',[TontineController::class, 'start'])->name('tontine.start');
+
+    // Show detaille participant
+    Route::get('user/{user}/particpant', [UserController::class, 'showParticipant'])->name('user.showParticipant');
 });

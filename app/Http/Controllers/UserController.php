@@ -101,8 +101,15 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+
     }
+
+    public function showParticipant(User $user)
+    {
+        return view('', compact('user'));
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
