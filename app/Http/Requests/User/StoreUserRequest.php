@@ -29,7 +29,8 @@ class StoreUserRequest extends FormRequest
             'phone_number' => ['required', 'integer', 'min:8'],
             'username' => ['nullable', 'string', 'unique:users,username'],
             'role' => ['nullable', 'in:participant,organizer,administrator'],
-            'password' => ['nullable', 'string',]
+            'password' => ['nullable', 'string',],
+            'nombre_bras' => ['nullable', 'integer', 'min:1']
         ];
     }
 }
