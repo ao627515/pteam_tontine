@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\User\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\User\StoreUserRequest;
 
 class UserController extends Controller
 {
@@ -12,8 +12,19 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   $users = User::orderBy('created_at', 'desc');
-        return view('user.index', compact('users'));
+    {
+        $userAuth = auth()->user();
+
+        if ($userAuth->role == 'organizer') {
+
+            $users = User::where('user_id', $userAuth->id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            return view('user.index', compact('users'));
+        } else {
+            // Affiche des organisateurs ou des administrateurs
+        }
     }
 
     /**
@@ -31,43 +42,64 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        if (auth()->user()->role == 'organizer') {
-            $identity_document_front = $data['identity_document_front'];
-            $identity_document_back = $data['identity_document_back'];
+        $userAuth = auth()->user();
 
-            $participant = User::create(array_merge($data,[
-                'role' => 'participant',
-                'identity_document_front' => ' ',
-                'identity_document_back' => ' ',
-                'user_id' => auth()->user()->id
-            ]));
+        if ($userAuth->role == 'organizer') {
+            if (
+                array_key_exists('identity_document_front', $data)
+                and
+                array_key_exists('identity_document_back', $data)
+            ) {
+                $identity_document_front = $data['identity_document_front'];
+                $identity_document_back = $data['identity_document_back'];
 
+                $participant = User::create(array_merge($data, [
+                    'role' => 'participant',
+                    'identity_document_front' => ' ',
+                    'identity_document_back' => ' ',
+                    'user_id' => $userAuth->id
+                ]));
 
-
-            if ($identity_document_front != null && !$identity_document_front->getError()
-                                        or
-                $identity_document_back != null && !$identity_document_back->getError()
+                if (
+                    $identity_document_front != null && !$identity_document_front->getError()
+                    and
+                    $identity_document_back != null && !$identity_document_back->getError()
                 ) {
+                    $identity_document_front_path = $identity_document_front->store($participant->id, 'public');
+                    $identity_document_back_path = $identity_document_back->store($participant->id, 'public');
 
+                    $participant->update([
+                        'identity_document_front' => $identity_document_front_path,
+                        'identity_document_back' => $identity_document_back_path,
+                    ]);
 
+                    sweetalert()->addSuccess('Nouveau participant créé !');
+                } else {
+                    // message d'erreur
+                    sweetalert()->addError('Images non conforme');
+                }
+            } else {
 
-                $identity_document_front_path = $identity_document_front->store( $participant->id, 'public');
-                $identity_document_back_path = $identity_document_back->store( $participant->id, 'public');
+                User::create(array_merge($data, [
+                    'role' => 'participant',
+                    'user_id' => $userAuth->id
+                ]));
 
-                $participant->update([
-                    'identity_document_front' => $identity_document_front_path,
-                    'identity_document_back' => $identity_document_back_path,
-                ]);
                 sweetalert()->addSuccess('Nouveau participant créé !');
-                return redirect()->back();
             }
+
+
+            return redirect()->back();
+        } else {
+            // creation des organisateurs et des administrateurs
         }
     }
+
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
         //
     }
@@ -75,7 +107,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
         //
     }
@@ -83,7 +115,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -91,8 +123,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        sweetalert()->addSuccess('Participant supprimée !');
+
+        return back();
     }
 }
