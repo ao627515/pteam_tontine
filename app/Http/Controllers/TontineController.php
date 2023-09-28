@@ -54,7 +54,8 @@ class TontineController extends Controller
             sweetalert()->addError('La tontine à déja debuté !!');
         } else {
             $tontine->update([
-                'status' => 'actif'
+                'status' => 'actif',
+                'started_at' => now()
             ]);
 
             sweetalert()->addSuccess('La tontine débute maintenant !!');
@@ -131,7 +132,7 @@ class TontineController extends Controller
             }
         } else {
 
-            User::create(array_merge($data, [
+            $participant = User::create(array_merge($data, [
                 'role' => 'participant',
                 'user_id' => $userAuth->id
             ]));
@@ -140,7 +141,7 @@ class TontineController extends Controller
         }
 
         $tontine->participation()->create([
-            'user_id' => $userAuth->id,
+            'user_id' => $participant->id,
             'tontine_id' => $tontine->id,
             'nombre_bras' =>  $data['nombre_bras'],
             'rank' => $tontine->participationRank()
@@ -154,7 +155,6 @@ class TontineController extends Controller
      */
     public function show(Tontine $tontine)
     {
-
         return view('tontine.detail', compact('tontine'));
     }
 
