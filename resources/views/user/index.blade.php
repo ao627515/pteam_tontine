@@ -42,7 +42,7 @@
 @endsection
 
 @section('script')
-    @if (session('sweet_alert'))
+    {{-- @if (session('sweet_alert'))
         <script>
             Swal.fire({
                 icon: '{{ session('sweet_alert.icon') }}',
@@ -50,5 +50,5 @@
                 text: '{{ session('sweet_alert.text') }}',
             });
         </script>
-    @endif
+    @endif --}}
 @endsection
