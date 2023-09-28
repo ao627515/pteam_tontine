@@ -106,14 +106,6 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-header">DECONNEXION</li>
-                        <li class="nav-item ">
-                            <form action="{{ route('logout') }}" method="POST" class="nav-link" id="logout">
-                                @csrf
-                                <i class="fa-solid fa-power-off nav-icon" style="color: #ff0000;"></i>
-                                <p class="text-light">Déconnexion</p>
-                            </form>
-                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
