@@ -57,12 +57,14 @@
                             Ajouter un nouveau
                         </button>
                     @else
+                        @unless ($tontine->isStart())
                         <form action="{{ route('tontine.start', $tontine) }}" method="post">
                             @csrf
                             <button type="submit" class="btn btn-danger">
                                 Lancer la tontine
                             </button>
                         </form>
+                        @endunless
                     @endif
                 </div>
             </div>
