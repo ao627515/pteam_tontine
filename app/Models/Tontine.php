@@ -77,4 +77,8 @@ class Tontine extends Model
         return $rank;
     }
 
+    public function isStart() {
+        return $this->status == 'actif';
+    }
+
 }
