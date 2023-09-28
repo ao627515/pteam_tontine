@@ -70,16 +70,16 @@
         <div class="col-12">
             <div class="card-body">
                 <table id="example1" class="table table-bordered">
-                    @forelse ($tontine->participation as $participation)
-                        <thead>
-                            <tr>
-                                <th>Nom (s)</th>
-                                <th>Bras</th>
-                                <th>Rang</th>
-                                <th>Cotisation</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <thead>
+                        <tr>
+                            <th>Nom (s)</th>
+                            <th>Bras</th>
+                            <th>Rang</th>
+                            <th>Cotisation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @forelse ($tontine->participation as $participation)
                             {{-- {{dd($tontine,$tontine->participation,$tontine->number_of_members)}} --}}
                             <tr>
                                 <td><a

@@ -30,13 +30,35 @@
                             class="fas fa-bars"></i></a>
                 </li>
             </ul>
-
-            <!-- Right navbar links -->
+             <!-- Liens de la barre de navigation à gauche -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link p-0 pr-3" data-toggle="dropdown" href="#">
+                        <img src="../../dist/img/user2-160x160.jpg"
+                         class='img-circle elevation-2' width="40" height="40" alt="">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-3">
+                        <h4 class="h4 mb-0"><strong>{{ Auth::user()->last_name .' '. Auth::user()->first_name }}</strong></h4>
+                        {{-- <div class="mb-3">{{ Auth::user()->email }}</div> --}}
+                        <div class="mb-3">{{ Auth::user()->phone_number }}</div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user-cog mr-2"></i> Paramètres								
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-lock mr-2"></i> Changer le mot de passe
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="{{route('logout')}}" class="dropdown-item text-danger">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Déconnexion							
+                        </a>							
+                    </div>
                 </li>
             </ul>
         </nav>
@@ -53,17 +75,6 @@
 
             <!-- Sidebar -->
             <div class="sidebar">
-                <!-- Sidebar user (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#"
-                            class="d-block">{{ auth()->user()->last_name . ' ' . auth()->user()->first_name }}</a>
-                    </div>
-                </div>
-
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
