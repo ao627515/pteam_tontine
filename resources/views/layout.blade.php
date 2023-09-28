@@ -55,9 +55,10 @@
                             <i class="fas fa-lock mr-2"></i> Changer le mot de passe
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="{{route('logout')}}" class="dropdown-item text-danger">
+                        <form action="{{ route('logout') }}" method="POST" class="nav-link" id="logout">
+                            @csrf
                             <i class="fas fa-sign-out-alt mr-2"></i> Déconnexion							
-                        </a>							
+                        </form>						
                     </div>
                 </li>
             </ul>
