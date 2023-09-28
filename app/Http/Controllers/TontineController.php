@@ -46,6 +46,23 @@ class TontineController extends Controller
         return to_route('tontine.index');
     }
 
+    public function start(Tontine $tontine)
+    {
+
+        if ($tontine->isStart()) {
+
+            sweetalert()->addError('La tontine à déja debuté !!');
+        } else {
+            $tontine->update([
+                'status' => 'actif'
+            ]);
+
+            sweetalert()->addSuccess('La tontine débute maintenant !!');
+        }
+
+        return back();
+    }
+
     public function addParticipant(StoreUserRequest $request, Tontine $tontine)
     {
         $data = $request->validated();

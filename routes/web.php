@@ -47,4 +47,7 @@ Route::middleware(['auth'])->group(function(){
 
     // Ajouté un participant a une tontine
     Route::post('tontine/{tontine}/add/participant', [TontineController::class, 'addParticipant'])->name('tontine.addParticipant');
+
+    // Commencé une tontine
+    Route::post('tontine/{tontine}/start',[TontineController::class, 'start'])->name('tontine.start');
 });
