@@ -7,7 +7,6 @@ use App\Http\Controllers\ParticipationController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\TontineController;
 use App\Http\Controllers\UserController;
-use App\Models\Tontine;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,4 +44,7 @@ Route::middleware(['auth'])->group(function(){
     ]);
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+    // Ajouté un participant a une tontine
+    Route::post('tontine/{tontine}/add/participant', [TontineController::class, 'addParticipant'])->name('tontine.addParticipant');
 });
