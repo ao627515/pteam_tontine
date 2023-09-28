@@ -12,7 +12,7 @@
                     <div class="widget-user-header bg-secondary">
                         <h2 class="widget-user-username">{{ $tontine->name }}</h2>
                         <h5 class="widget-user-desc">Créé le {{ $tontine->created_at }}</h5>
-                        <button class="text-danger">Status : Non Démarré</button>
+                        <button class="text-danger">Status : {{ $tontine->status }}</button>
                     </div>
                 </div>
                 <div class="card-footer p-0">
@@ -57,9 +57,12 @@
                             Ajouter un nouveau
                         </button>
                     @else
-                        <button type="submit" class="btn btn-danger">
-                            Lancer la tontine
-                        </button>
+                        <form action="{{ route('tontine.start', $tontine) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">
+                                Lancer la tontine
+                            </button>
+                        </form>
                     @endif
                 </div>
             </div>
