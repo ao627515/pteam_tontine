@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('status')->nullable();
             $table->timestamps();
+            $table->timestamp('started_at')->nullable();
             $table->timestamp('suspension_date')->nullable();
             $table->text('suspension_reason')->nullable();
             $table->softDeletes();
