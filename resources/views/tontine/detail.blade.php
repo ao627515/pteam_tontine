@@ -36,7 +36,7 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link text-secondary">
                                 Adhérants <span
-                                    class="float-right badge bg-danger">{{ $tontine->participation->count() }}/{{ $tontine->number_of_members }}</span>
+                                    class="float-right badge bg-danger">{{ $tontine->currentMembersNumber() }}/{{ $tontine->number_of_members }}</span>
                             </a>
                         </li>
                     </ul>
@@ -52,7 +52,7 @@
                     <h1>Liste des Participants</h1>
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-5 text-end mt-2">
-                    @if ($tontine->participation->count() < $tontine->number_of_members)
+                    @if (!$tontine->isFull())
                         <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#modal-default">
                             Ajouter un nouveau
                         </button>
@@ -111,21 +111,21 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" enctype="multipart/form-data" action="{{ route('user.store') }}">
+                    <form method="POST" enctype="multipart/form-data" action="{{ route('tontine.addParticipant', $tontine) }}">
                         @csrf
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Nom:</label>
                                     <input type="text" class="form-control" name="last_name" id="exampleInputEmail1"
-                                        placeholder="Entrer un prenom">
+                                        placeholder="Entrer un prenom" required>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Prenom (s) :</label>
                                     <input type="text" class="form-control" name="first_name" id="exampleInputPassword1"
-                                        placeholder="Entrer un prenom">
+                                        placeholder="Entrer un prenom" required>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -133,21 +133,28 @@
                                     <label for="exampleInputFile1"> CNIB Recto
                                     </label>
                                     <input class="form-control" type="file" name="identity_document_front"
-                                        id="exampleInputFile1">
+                                        id="exampleInputFile1" >
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="exampleInputFile1"> CNIB Verso</label>
                                     <input class="form-control" type="file" name="identity_document_back"
-                                        id="exampleInputFile1">
+                                        id="exampleInputFile1" >
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Nombre de bras (Nombre de place occupé)</label>
+                                    <input type="number" name="nombre_bras" class="form-control" id="exampleInputEmail1"
+                                         value="1" required>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Téléphone</label>
                                     <input type="number" name="phone_number" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Enter le tel">
+                                        placeholder="Enter le tel" required>
                                 </div>
                             </div>
                         </div>
