@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h2>Liste de mes participants</h2>
+                <h2>Liste de mes participant</h2>
             </div>
             <div class="col-sm-6 col-md-4 text-right">
                 <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal-default">
