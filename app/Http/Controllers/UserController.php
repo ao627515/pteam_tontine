@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\User\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\User\StoreUserRequest;
 
 class UserController extends Controller
 {
@@ -22,7 +22,6 @@ class UserController extends Controller
                 ->get();
 
             return view('user.index', compact('users'));
-
         } else {
             // Affiche des organisateurs ou des administrateurs
         }
@@ -43,7 +42,9 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        if (auth()->user()->role == 'organizer') {
+        $userAuth = auth()->user();
+
+        if ($userAuth->role == 'organizer') {
             if (
                 array_key_exists('identity_document_front', $data)
                 and
@@ -56,7 +57,7 @@ class UserController extends Controller
                     'role' => 'participant',
                     'identity_document_front' => ' ',
                     'identity_document_back' => ' ',
-                    'user_id' => auth()->user()->id
+                    'user_id' => $userAuth->id
                 ]));
 
                 if (
@@ -75,13 +76,13 @@ class UserController extends Controller
                     sweetalert()->addSuccess('Nouveau participant créé !');
                 } else {
                     // message d'erreur
-                    sweetalert()->addDanger('Images non conforme');
+                    sweetalert()->addError('Images non conforme');
                 }
             } else {
 
                 User::create(array_merge($data, [
                     'role' => 'participant',
-                    'user_id' => auth()->user()->id
+                    'user_id' => $userAuth->id
                 ]));
 
                 sweetalert()->addSuccess('Nouveau participant créé !');
@@ -94,10 +95,11 @@ class UserController extends Controller
         }
     }
 
+
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
         //
     }
@@ -105,7 +107,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
         //
     }
@@ -113,7 +115,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -121,8 +123,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        sweetalert()->addSuccess('Participant supprimée !');
+
+        return back();
     }
 }
