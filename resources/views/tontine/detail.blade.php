@@ -1,7 +1,8 @@
 @extends('layout')
-
 @section('title', 'Tontine')
-
+@section('css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
 @section('content')
     <div class="container">
         <!-- Widget: user widget style 2 -->
@@ -53,17 +54,15 @@
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-5 text-end mt-2">
                     @if (!$tontine->isFull())
-                        <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#modal-default">
-                            Ajouter un nouveau
-                        </button>
+                        @include('tontine.recherche-participant')
                     @else
                         @unless ($tontine->isStart())
-                        <form action="{{ route('tontine.start', $tontine) }}" method="post">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">
-                                Lancer la tontine
-                            </button>
-                        </form>
+                            <form action="{{ route('tontine.start', $tontine) }}" method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">
+                                    Lancer la tontine
+                                </button>
+                            </form>
                         @endunless
                     @endif
                 </div>
@@ -84,7 +83,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                            @forelse ($tontine->participation as $participation)
+                        @forelse ($tontine->participation as $participation)
                             {{-- {{dd($tontine,$tontine->participation,$tontine->number_of_members)}} --}}
                             <tr>
                                 <td><a
@@ -96,95 +95,91 @@
                             </tr>
                         @empty
                             <b class="text-warning">Aucun participant n'a été ajouté </b>
-                    @endforelse
+                        @endforelse
+                    </tbody>
                 </table>
-                </tbody>
             </div>
             <!-- /.card-body -->
         </div>
         <!-- /.col -->
     </div>
-    <!-- /.row -->
-    </div>
-    <div class="modal fade" id="modal-default">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Nouveau Participation(s)</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" enctype="multipart/form-data" action="{{ route('tontine.addParticipant', $tontine) }}">
-                        @csrf
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Nom:</label>
-                                    <input type="text" class="form-control" name="last_name" id="exampleInputEmail1"
-                                        placeholder="Entrer un prenom" required>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Prenom (s) :</label>
-                                    <input type="text" class="form-control" name="first_name" id="exampleInputPassword1"
-                                        placeholder="Entrer un prenom" required>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="exampleInputFile1"> CNIB Recto
-                                    </label>
-                                    <input class="form-control" type="file" name="identity_document_front"
-                                        id="exampleInputFile1" >
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="exampleInputFile1"> CNIB Verso</label>
-                                    <input class="form-control" type="file" name="identity_document_back"
-                                        id="exampleInputFile1" >
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Nombre de bras (Nombre de place occupé)</label>
-                                    <input type="number" name="nombre_bras" class="form-control" id="exampleInputEmail1"
-                                         value="1" required>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Téléphone</label>
-                                    <input type="number" name="phone_number" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Enter le tel" required>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="modal-footer justify-content-between">
-                            <button type="reset" class="btn btn-default">Annuler</button>
-                            <button type="submit" class="btn btn-success">Enregistré</button>
-                        </div>
-                    </form>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
-    @endsection
-    @section('script')
-        <!-- Vérifiez s'il y a un message SweetAlert dans la session -->
-        @if (session('sweet_alert'))
-            <script>
-                Swal.fire({
-                    icon: '{{ session('sweet_alert.icon') }}',
-                    title: '{{ session('sweet_alert.title') }}',
-                    text: '{{ session('sweet_alert.text') }}',
+
+@endsection
+@section('script')
+    <!-- Inclure les fichiers JavaScript de Bootstrap (jQuery requis) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+   <script>
+    $(document).ready(function() {
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    var tontineId = getTontineIdFromUrl();
+
+    function getTontineIdFromUrl() {
+        var url = window.location.href;
+        var parts = url.split('/');
+        return parts[parts.length - 1];
+    }
+
+    $('#searchText').on('input', function() {
+        var term = $(this).val();
+
+        $.ajax({
+            url: '{{ route('tontine.rechercheParticipant') }}',
+            type: 'POST',
+            data: {
+                term: term,
+                '_token': csrfToken
+            },
+            success: function(response) {
+                var tbody = $('#resultsTable tbody');
+                tbody.empty();
+
+                response.resultats.forEach(function(participant) {
+                    var row = `<tr>
+                        <td>${participant.last_name} ${participant.first_name}</td>
+                        <td>${participant.phone_number}</td>
+                        <td><button type="button" class="btn btn-success" data-user-id="${participant.id}">Ajouter</button></td>
+                    </tr>`;
+                    tbody.append(row);
                 });
-            </script>
-        @endif
-    @endsection
+
+                $('form').submit(function() {
+                    $(this).find(':submit').attr('disabled', 'disabled');
+                });
+
+                $('body').on('click', '.btn-success', function() {
+                    var userId = $(this).data('user-id');
+                    $(this).attr('disabled', 'disabled');
+                    
+                    $.ajax({
+                        url: '{{ route('tontine.ajaxnewParticipant') }}',
+                        type: 'POST',
+                        data: {
+                            user_id: userId,
+                            tontine_id: tontineId,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            location.reload(true); // Rechargez la page
+                            if (response.msg) {
+                                swal("Succès!", response.message, "success");
+                            } else {
+                                swal("Erreur!", response.message, "error");
+                            }
+                            console.log(response.message);
+                        },
+                        complete: function() {
+                            $('.btn-success').removeAttr('disabled');
+                        }
+                    });
+                });
+
+                var searchResultsInput = $('#searchResults');
+                searchResultsInput.val(response.resultats.length + ' résultat(s) trouvé(s)');
+            }
+        });
+    });
+});
+
+   </script>
+@endsection

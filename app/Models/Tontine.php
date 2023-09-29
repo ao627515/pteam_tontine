@@ -17,6 +17,11 @@ class Tontine extends Model
         return $this->hasMany(Participation::class);
     }
 
+    //  cette relation signifie que chaque tontine est associer a un seul user specifique
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     /*
     * Renvoi le nombre de participant courant de la tontine

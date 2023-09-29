@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Tontine;
 use Illuminate\Http\Request;
+use App\Models\Participation;
 use App\Http\Requests\User\StoreUserRequest;
 
 class UserController extends Controller
@@ -20,8 +22,10 @@ class UserController extends Controller
             $users = User::where('user_id', $userAuth->id)
                 ->orderBy('created_at', 'desc')
                 ->get();
-
-            return view('user.index', compact('users'));
+            // Obtenez l'ID de l'utilisateur dont vous voulez compter les tontines associées
+            // Comptez le nombre de tontines auxquelles l'utilisateur est associé en tant qu'organisateur via les participations
+            $nombreDeTontinesUser = Tontine::with('user')->count();
+            return view('user.index', compact('users', 'nombreDeTontinesUser'));
         } else {
             // Affiche des organisateurs ou des administrateurs
         }

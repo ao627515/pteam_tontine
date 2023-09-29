@@ -21,6 +21,11 @@ class User extends Authenticatable
      */
     protected $guarded = [''];
 
+    //cette relations signifie que un user peut etre associer a plusieurs tontines
+    public function tontines()
+    {
+        return $this->hasMany(Tontine::class, 'user_id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -40,4 +45,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
 }

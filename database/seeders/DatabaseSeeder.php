@@ -31,16 +31,6 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'id' => Str::uuid(),
-            'last_name' => 'Simporé',
-            'first_name' => 'Elie',
-            'phone_number' => 71454901,
-            'username' => 'simporeelie',
-            'role' => 'organizer',
-            'password' => Hash::make('12345678'),
-        ]);
-
-        User::factory()->create([
-            'id' => Str::uuid(),
             'last_name' => 'So',
             'first_name' => 'Jonas',
             'phone_number' => 56785580,
@@ -48,46 +38,6 @@ class DatabaseSeeder extends Seeder
             'role' => 'organizer',
             'password' => Hash::make('1234'),
         ]);
-
-        User::factory()->create([
-            'id' => Str::uuid(),
-            'last_name' => 'Ouédraogo',
-            'first_name' => 'Ibrahim',
-            'phone_number' => 06030606,
-            'username' => 'ib',
-            'role' => 'organizer',
-            'password' => Hash::make('12345678'),
-        ]);
-        User::factory()->create([
-            'id' => Str::uuid(),
-            'last_name' => 'Tapsoba',
-            'first_name' => 'Faridatou',
-            'phone_number' => 62027741,
-            'username' => 'farida',
-            'role' => 'organizer',
-            'password' => Hash::make('12345678'),
-        ]);
-
-        User::factory()->create([
-            'id' => Str::uuid(),
-            'last_name' => 'Sanfo',
-            'first_name' => 'Mahamadi',
-            'phone_number' => 54585434,
-            'username' => 'madi',
-            'role' => 'organizer',
-            'password' => Hash::make('12345678'),
-        ]);
-
-        $users = User::all();
-
-        for ($i = 1; $i <= 10; $i++){
-            foreach ($users as $user) {
-                Tontine::factory()->create([
-                    'user_id' => $user->id,
-                    'name' => 'Tonine '.$i
-                ]);
-            }
-        }
 
     }
 }

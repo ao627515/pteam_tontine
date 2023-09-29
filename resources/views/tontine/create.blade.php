@@ -1,56 +1,62 @@
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Nouvelle tontine</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Nouvelle tontine</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="tontine-form" action="{{ route('tontine.store') }}" method="POST">
+                    @csrf
+                    <div class="row row-cols-2 text-start">
+                        <div class="form-group col-md-6">
+                            <label for="name">Nom:</label>
+                            <input id="name" name="name" type="text" placeholder="Nom"
+                                class="form-control required-field" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="profit">Bénéfice:</label>
+                            <input id="profit" name="profit" type="number" placeholder="Bénéfice"
+                                class="form-control required-field" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="delay">Délai:</label>
+                            <input id="delay" name="delay" type="text" placeholder="Délai"
+                                class="form-control required-field" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="periode">Période:</label>
+                            <select id="periode" name="periode" class="form-select" required>
+                                <option value="day">Jour</option>
+                                <option value="week">Semaine</option>
+                                <option value="month">Mois</option>
+                                <option value="year">Année</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="amount">Montant:</label>
+                            <input id="amount" name="amount" type="number" placeholder="Montant"
+                                class="form-control required-field" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="number_of_members">Nombre de membres:</label>
+                            <input id="number_of_members" name="number_of_members" type="number"
+                                placeholder="Nombre de membres" class="form-control required-field" required>
+                        </div>
+                        <div class="form-group  col-12">
+                            <label for="description">Description:</label>
+                            <textarea id="description" name="description" class="form-control" rows="2" placeholder="Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <button type="submit" id="save-button" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="modal-body"> 
-            <form id="" action="{{route('tontine.store')}}" method="POST">
-                @csrf
-
-                <div class="row row-cols-2">
-                <div class="col mb-2">
-                    <input name="name" type="text" placeholder="nom" class="form-control">
-                </div>
-                <div class="col mb-2">
-                    <input name="profit" type="number" placeholder="benefice" class="form-control">
-                </div>
-                <div class="col mb-2">
-                    <input name="delay" type="text" placeholder="delai" class="form-control">
-                </div>
-                <div class="col mb-2">
-                    <select name="periode" id="" class="form-select">
-                        <option value="day">Jour</option>
-                        <option value="week">semaine</option>
-                        <option value="month">mois</option>
-                        <option value="year">annee</option>
-                    </select>
-                    
-                </div>
-                <div class="col mb-2">
-                    <input name="amount" type="number" placeholder="montant">
-                </div>
-                <div class="col mb-2">
-                    <input name="number_of_members" type="number" placeholder="nombre de membre">
-                </div>
-                <div>
-                <textarea name="description" id="" class="form-control" rows="2">description</textarea>
-
-                </div>
-             </div>
-             <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Enregistrer</button>
-              </div>
-        </form>    
-        </div>
-
-      </div>
-      <!-- /.modal-content -->
+        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
+</div>
